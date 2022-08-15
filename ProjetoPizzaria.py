@@ -1,6 +1,7 @@
 from tkinter import *
 import pymysql
 from tkinter import messagebox, ttk
+import pymysql.cursors
 
 
 class AdminJanela():
@@ -59,22 +60,18 @@ class AdminJanela():
         self.root.mainloop()
 
 
-    @staticmethod
-    def conectar():
-        conexao = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='1234',
-            db='erp',
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor
-        )
-
 
 
     def MostrarProdutosBeckEnd(self):
         try:
-            AdminJanela.conectar()
+            conexao = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='1234',
+                db='erp',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
         except:
             print('Erro ao se conectar ao banco de dados')
 
@@ -103,7 +100,14 @@ class AdminJanela():
         preco = self.preco.get()
 
         try:  #muito interessante criar uma função para conexão para ficar mais facil ao inves de ficar copiando e colando a conexao
-            AdminJanela.conectar()
+            conexao = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='1234',
+                db='erp',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
         except:
             print('Erro ao se conectar ao banco de dados')
 
@@ -122,7 +126,14 @@ class AdminJanela():
     def RemoverCadastrosBackEnd(self):
         idDeletar = int(self.tree.selection()[0]) #vai pegar o valor do id do elemento do meu banco de dados para excluir
         try:
-           AdminJanela.conectar()
+            conexao = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='1234',
+                db='erp',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
         except:
             print('Erro ao se conectar ao banco de dados')
         try:
@@ -139,7 +150,14 @@ class AdminJanela():
         if messagebox.askokcancel('Limpar dados Cuidado!', 'DESEJA ESCLUIR TODOS OS DADOS DA TABELA?'):
             #com este if eu crio uma janela para confirmar se eu quero exclui ou não os dados. posso fazer em todo casa tanto no momento de excluir como no momento de cadastrar ou posso usar os ifs feitos no curso em video
             try:
-                AdminJanela.conectar()
+                conexao = pymysql.connect(
+                    host='localhost',
+                    user='root',
+                    password='1234',
+                    db='erp',
+                    charset='utf8mb4',
+                    cursorclass=pymysql.cursors.DictCursor
+                )
             except:
                 print('Erro ao se conectar ao banco de dados')
             try:
@@ -153,12 +171,20 @@ class AdminJanela():
 
 
 class JanelaLogin():#class vai ser uma janela do nosso programa
+
     def verificaLogin(self):
 
         autenticado = False
         usuarioMaster = False
         try:
-            AdminJanela.conectar()
+            conexao = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='1234',
+                db='erp',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
         except:
             print('Erro ao se conectar ao banco de dados')
         usuario = self.login.get()  #o que o usuario digitar dentro do Entry abaixo ira para dentro desta variavel
@@ -184,8 +210,7 @@ class JanelaLogin():#class vai ser uma janela do nosso programa
         if autenticado:
             messagebox.showinfo('Autenticado',f'Bem vindo ao programa {linha["nome"]}')
             self.root.destroy()
-            if usuarioMaster:
-                AdminJanela()
+            AdminJanela()
 
 
     def CadastrosBackEnd(self):
@@ -196,7 +221,14 @@ class JanelaLogin():#class vai ser uma janela do nosso programa
                     nome = self.login.get()
                     senha = self.senha.get()
                     try:
-                        AdminJanela.conectar()
+                        conexao = pymysql.connect(
+                            host='localhost',
+                            user='root',
+                            password='1234',
+                            db='erp',
+                            charset='utf8mb4',
+                            cursorclass=pymysql.cursors.DictCursor
+                        )
                     except:
                         print('Erro ao se conectar ao banco de dados')
                     try:
@@ -225,7 +257,14 @@ class JanelaLogin():#class vai ser uma janela do nosso programa
 
     def UpdateBeckEnd(self): #interligando com MYSQL, onde os arquivos serão armazenados.
         try:
-           AdminJanela.conectar()
+            conexao = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='1234',
+                db='erp',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
         except:
             print('Erro ao se conectar ao banco de dados')
 
